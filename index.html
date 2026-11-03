@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#45477f">
+		<meta name="description" content="Bright Learn is a calm, personalized space to build skills and explore new ideas.">
+		<title>Bright Learn | Learning Studio</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="style.css">
+		<!-- Google Identity Services is used only when you configure a Google OAuth client ID. -->
+		<script src="https://accounts.google.com/gsi/client" async defer></script>
+		<script src="script.js" defer></script>
+	</head>
+	<body>
+		<main id="app" aria-live="polite">
+			<div class="floating-books" aria-hidden="true">
+				<span class="floating-book floating-book--one"></span>
+				<span class="floating-book floating-book--two"></span>
+				<span class="floating-book floating-book--three"></span>
+				<span class="floating-book floating-book--four"></span>
+				<span class="floating-book floating-book--five"></span>
+				<span class="floating-book floating-book--six"></span>
+			</div>
+
+			<!-- Cover 1: Welcome splash. Keep the other covers hidden until selected. -->
+			<section class="cover cover--splash" id="splash-page" aria-labelledby="splash-title">
+				<h1 id="splash-title" class="brand-title">Bright <span>Learn</span></h1>
+				<p class="splash-copy">Learning at your own pace.</p>
+			</section>
+
+			<!-- Cover 2: Account creation and sign-in. -->
+			<section class="cover cover--account" id="account-page" aria-labelledby="account-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Start with a profile</p>
+					<h1 id="account-title">Your learning profile</h1>
+					<p>A parent or guardian can help set up your account.</p>
+				</div>
+
+				<div class="account-panel">
+					<div class="choice-tabs" role="tablist" aria-label="Account option">
+						<button class="choice-tab is-active" id="signup-tab" type="button" role="tab" aria-selected="true" aria-controls="signup-panel">Sign up</button>
+						<button class="choice-tab" id="signin-tab" type="button" role="tab" aria-selected="false" aria-controls="signin-panel">Sign in</button>
+					</div>
+
+					<div id="signup-panel" role="tabpanel" aria-labelledby="signup-tab">
+						<form id="signup-form" class="form-grid">
+							<label for="child-name">Child's name</label>
+							<input id="child-name" name="name" type="text" autocomplete="name" maxlength="60" required>
+
+							<label for="child-email">Email</label>
+							<input id="child-email" name="email" type="email" autocomplete="email" required>
+
+							<label for="child-gender">Gender</label>
+							<select id="child-gender" name="gender" required>
+								<option value="" selected disabled>Choose one</option>
+								<option value="Female">Female</option>
+								<option value="Male">Male</option>
+							</select>
+
+							<label for="child-age">Age</label>
+							<input id="child-age" name="age" type="number" min="3" max="19" inputmode="numeric" required>
+
+							<label for="guardian-phone">Parent or guardian phone</label>
+							<input id="guardian-phone" name="guardianPhone" type="tel" autocomplete="tel" required>
+
+							<label for="signup-pin">Create a password or PIN</label>
+							<input id="signup-pin" name="pin" type="password" minlength="4" autocomplete="new-password" required>
+
+							<label class="consent-check" for="parent-consent">
+								<input id="parent-consent" name="consent" type="checkbox" required>
+								<span>I am a parent/guardian, or I have my parent/guardian's permission to create this account.</span>
+							</label>
+							<label class="consent-check" for="signup-whatsapp-consent">
+								<input id="signup-whatsapp-consent" name="whatsappAlerts" type="checkbox">
+								<span>With parent/guardian permission, open a WhatsApp draft to +234 915 649 6252 with the learner's name, email, and sign-in time. No password or PIN is shared; the message must be sent manually.</span>
+							</label>
+							<button class="button button--primary" type="submit">Create my account</button>
+						</form>
+					</div>
+
+					<div id="signin-panel" role="tabpanel" aria-labelledby="signin-tab" hidden>
+						<form id="signin-form" class="form-grid">
+							<label for="signin-email">Email</label>
+							<input id="signin-email" name="email" type="email" autocomplete="email" required>
+							<label for="signin-pin">Password or PIN</label>
+							<input id="signin-pin" name="pin" type="password" autocomplete="current-password" required>
+							<label class="consent-check" for="signin-whatsapp-consent">
+								<input id="signin-whatsapp-consent" name="whatsappAlerts" type="checkbox">
+								<span>With parent/guardian permission, open a WhatsApp draft for this and future sign-ins.</span>
+							</label>
+							<button class="button button--primary" type="submit">Sign in</button>
+						</form>
+					</div>
+
+					<div class="separator"><span>or</span></div>
+					<div id="google-signin-button" aria-label="Continue with Google"></div>
+					<p class="small-print">Bright Learn stores your learning profile on this device. Ask a parent or guardian before sharing personal information.</p>
+				</div>
+				<button class="text-button" id="back-to-splash" type="button">← Back</button>
+			</section>
+
+			<!-- Google sign-in profile completion for new users. -->
+			<section class="cover cover--profile" id="profile-page" aria-labelledby="profile-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Profile details</p>
+					<h1 id="profile-title">Personalize your profile</h1>
+					<p>Add the details needed to tailor your learning level.</p>
+				</div>
+				<form id="google-profile-form" class="form-grid account-panel">
+					<label for="google-gender">Gender</label>
+					<select id="google-gender" name="gender" required>
+						<option value="" selected disabled>Choose one</option>
+						<option value="Female">Female</option>
+						<option value="Male">Male</option>
+					</select>
+					<label for="google-age">Age</label>
+					<input id="google-age" name="age" type="number" min="3" max="19" inputmode="numeric" required>
+					<label for="google-guardian-phone">Parent or guardian phone</label>
+					<input id="google-guardian-phone" name="guardianPhone" type="tel" autocomplete="tel" required>
+					<label class="consent-check" for="google-parent-consent">
+						<input id="google-parent-consent" name="consent" type="checkbox" required>
+						<span>A parent/guardian has given permission to create this account.</span>
+					</label>
+					<label class="consent-check" for="google-whatsapp-consent">
+						<input id="google-whatsapp-consent" name="whatsappAlerts" type="checkbox">
+						<span>With parent/guardian permission, open a WhatsApp draft to +234 915 649 6252 with the learner's name, email, and sign-in time. No password or PIN is shared; the message must be sent manually.</span>
+					</label>
+					<button class="button button--primary" type="submit">Continue</button>
+				</form>
+			</section>
+
+			<!-- Cover 3: Choose an age-appropriate learning range. -->
+			<section class="cover cover--ages" id="age-page" aria-labelledby="age-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Choose your level</p>
+					<h1 id="age-title">Select an age range</h1>
+					<p>Activities and questions will be adapted to your range.</p>
+				</div>
+				<div class="age-options" role="group" aria-label="Choose an age range">
+					<button class="age-card age-card--sun" type="button" data-age-range="3-5"><span class="age-range-index" aria-hidden="true">01</span><strong>3–5</strong><small>Foundations</small></button>
+					<button class="age-card age-card--mint" type="button" data-age-range="6-8"><span class="age-range-index" aria-hidden="true">02</span><strong>6–8</strong><small>Early skills</small></button>
+					<button class="age-card age-card--sky" type="button" data-age-range="9-12"><span class="age-range-index" aria-hidden="true">03</span><strong>9–12</strong><small>Growing ideas</small></button>
+					<button class="age-card age-card--coral" type="button" data-age-range="13-19"><span class="age-range-index" aria-hidden="true">04</span><strong>13–19</strong><small>Advanced study</small></button>
+				</div>
+			</section>
+
+			<!-- Avatar stays visible on every page after a learner signs in. -->
+			<aside class="learner-avatar" id="learner-avatar" aria-label="Learner profile" hidden>
+				<span class="avatar-face" id="avatar-face" aria-hidden="true"></span>
+				<span class="avatar-name" id="avatar-name"></span>
+			</aside>
+
+			<!-- Cover 4: Personalized welcome. -->
+			<section class="cover cover--welcome" id="welcome-page" aria-labelledby="welcome-title" hidden>
+				<div class="welcome-symbol" aria-hidden="true"><span>BL</span></div>
+					<p class="eyebrow">Your space is ready</p>
+				<h1 id="welcome-title">Welcome, <span id="welcome-name">friend</span>!</h1>
+					<p>Your learning plan is ready when you are.</p>
+					<button class="button button--primary" id="lets-play-button" type="button">View activities <span aria-hidden="true">→</span></button>
+			</section>
+
+			<!-- Cover 5: Activity choices. -->
+			<section class="cover cover--activities" id="activities-page" aria-labelledby="activities-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Your learning space</p>
+					<h1 id="activities-title">Choose an activity</h1>
+					<p id="activity-level-label">Activities selected for your level.</p>
+				</div>
+				<div class="activity-options">
+					<button class="activity-card activity-card--games" type="button" data-open-page="games-page">
+						<span class="activity-icon" aria-hidden="true">01</span><span><strong>Learning Games</strong><small>Practice core skills at your pace</small></span><span aria-hidden="true">→</span>
+					</button>
+					<button class="activity-card activity-card--quiz" type="button" data-open-page="quiz-page">
+						<span class="activity-icon" aria-hidden="true">02</span><span><strong>Bible Quiz</strong><small>Review stories and key ideas</small></span><span aria-hidden="true">→</span>
+					</button>
+					<button class="activity-card activity-card--puzzle" type="button" data-open-page="puzzle-page">
+						<span class="activity-icon" aria-hidden="true">03</span><span><strong>Picture Puzzle</strong><small>Build a scene piece by piece</small></span><span aria-hidden="true">→</span>
+					</button>
+				</div>
+				<button class="text-button" id="sign-out-button" type="button">Sign out</button>
+			</section>
+
+			<!-- Learning games. JavaScript fills levels and tracks progress. -->
+			<section class="cover cover--games" id="games-page" aria-labelledby="games-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Games · Skill practice</p>
+					<h1 id="games-title">Learning Games</h1>
+					<p>Complete each level to unlock the next.</p>
+				</div>
+				<div class="game-toolbar"><p>Points <strong id="star-count">0</strong></p><button class="text-button" data-back-to-activities type="button">← Activities</button></div>
+				<div class="game-levels" id="game-levels" aria-label="Game levels"></div>
+				<div class="game-play-area" id="game-play-area" hidden>
+					<h2 id="game-question">Ready to play?</h2>
+					<div id="game-options" class="answer-options"></div>
+					<p id="game-feedback" role="status" aria-live="polite"></p>
+				</div>
+			</section>
+
+			<!-- Bible quiz. Questions are supplied by script.js. -->
+			<section class="cover cover--quiz" id="quiz-page" aria-labelledby="quiz-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Knowledge check</p>
+					<h1 id="quiz-title">Bible Quiz</h1>
+				</div>
+				<div class="quiz-panel">
+					<p class="quiz-progress" id="quiz-progress">Question 1</p>
+					<h2 id="quiz-question">Your first question is on its way!</h2>
+					<div class="answer-options" id="quiz-options"></div>
+					<p id="quiz-feedback" role="status" aria-live="polite"></p>
+					<button class="button button--primary" id="quiz-next-button" type="button" hidden>Next question</button>
+					<div id="quiz-result" hidden>
+						<h2>Quiz complete!</h2>
+						<p id="quiz-score"></p>
+						<button class="button button--primary" id="quiz-again-button" type="button">Play again</button>
+					</div>
+				</div>
+				<button class="text-button" data-back-to-activities type="button">← Activities</button>
+			</section>
+
+			<!-- Puzzle image tiles are generated from local, free-to-use images in script.js. -->
+			<section class="cover cover--puzzle" id="puzzle-page" aria-labelledby="puzzle-title" hidden>
+				<div class="cover-heading">
+					<p class="eyebrow">Visual reasoning</p>
+					<h1 id="puzzle-title">Picture Puzzle</h1>
+					<p id="puzzle-instructions">Place each piece to complete the illustration.</p>
+				</div>
+				<div class="puzzle-board" id="puzzle-board" aria-label="Puzzle board"></div>
+				<p id="puzzle-feedback" role="status" aria-live="polite"></p>
+				<button class="text-button" data-back-to-activities type="button">← Activities</button>
+			</section>
+		</main>
+
+		<!-- Activity encouragement appears after five minutes of active play. -->
+		<dialog class="encouragement-dialog" id="encouragement-dialog" aria-labelledby="encouragement-title">
+			<p class="encouragement-label">A note on your progress</p>
+			<h2 id="encouragement-title">Keep up the steady work</h2>
+			<p id="encouragement-message">Your focus and practice are making a difference.</p>
+			<button class="button button--primary" id="continue-activity-button" type="button">Continue</button>
+		</dialog>
+
+		<div class="toast" id="toast-message" role="status" aria-live="polite" hidden></div>
+	</body>
+</html>
